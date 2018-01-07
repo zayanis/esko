@@ -1,5 +1,5 @@
 <template>
-    <div id="menu">
+    <div>
         <div class="ui grid container">
             <div class="row">
                 <div class="column">
@@ -39,7 +39,7 @@ export default {
     methods: {
         onLogoutClicked() {
             localStorage.removeItem('authToken');
-            this.$store.commit('setIsAuthenticated', false);
+          //  this.$store.commit('setIsAuthenticated', false);
         }
     }
 }

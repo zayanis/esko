@@ -2,6 +2,8 @@
     <div class="row">
         <div class="four wide column">
             <h1>accueil</h1>
+			Total demandes: <span>{{ totalDemandes }}</span>
+			Total users: <span>{{ totalUsers }}</span>
         </div>
   
     </div>
@@ -13,48 +15,21 @@ import { mapGetters } from 'vuex';
 
 export default {
   
+   
     computed: {
         ...mapGetters({
-            isAuthenticated: 'getIsAuthenticated',
-            isLoading: 'getIsLoading'
+            totalDemandes: 'getCountDemandes',
+			totalUsers: 'getCountUsers'
         })
     },
     methods: {
-        onSuccessfulLogin(authToken) {
-            localStorage.setItem('authToken', authToken);
-            this.$store.commit('setIsAuthenticated', true);
-        }
     },
     created() {
-        const authToken = localStorage.getItem('authToken');
-
-        if (authToken !== null) {
-            this.onSuccessfulLogin(authToken);
-        }
-		 this.$http.get('https://eskodb-f2a5.restdb.io/rest/demandes?totals=true&count=true',    {headers: {'x-apikey':'8839bfd1e5fa501a918576b63e8813bf00e74'}},{crossDomain: "true"})
-		.then(response => {
-           alert(response);
-        });
+    },
+    mounted() {
+	this.$store.dispatch('requestCountDemandes');
+	this.$store.dispatch('requestCountUsers');
     }
 }
 </script>
 
-<style>
-.fade-enter-active, .fade-leave-active {
-    transition: opacity .4s !important;
-}
-.fade-enter, .fade-leave-to {
-    opacity: 0 !important;
-}
-#login {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-.modal {
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-}
-</style>

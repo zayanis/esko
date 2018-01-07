@@ -19,9 +19,22 @@
 			</option>
 		</select>
     </div>
-  <div class="ui button" tabindex="0" @click="submitData">Rechercher</div>
-   <button class="ui button" type="submit"  v-on:click="submitData">Submit</button>
-</div>
+	
+	 <div class="field">
+	 <label>Montant</label>
+        <input type="number" name="montant"  v-model="montant">
+      </div>
+	  
+	  <div class="field">
+	  <label>Date</label>
+        <input type="date" name="date" placeholder="Date" v-model="date">
+      </div>
+	  </div>
+  <div class="ui button" tabindex="0">Rechercher</div>
+
+  <span>Sélectionné : {{ paysdest }}</span>
+
+  
   
   </form>
  
@@ -52,17 +65,18 @@ data() {
     computed: {
         ...mapGetters({
 		  allDemandes: 'getAllDemandes',
-		  options: 'getOptions'
+		  options: 'getOptions',
+		  devise: 'getDevise'
         })
     },
     methods: {
-	  submitData: function() {
-            alert('submit');
-			}
+	  onManufacturerSelected(id) {
+            this.selected = id;
+        },
     },
-	
     created() {
 	this.$store.dispatch('requestAllDemandes');
+	this.$store.dispatch('requestDevise');
 
     }
 

@@ -7,67 +7,79 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const state = {
-    isAuthenticated: false,
-    authErrorMessage: '',
-    availableFoods: [],
-    selectedCalendarDate: moment()
+	countDemandes: 0,
+	countUsers: 0,
+	options: [
+      { text: 'France', value: 'France' },
+      { text: 'Tunisie', value: 'Tunisie' }
+    ],
+	devise: 'Y',
+	 demandes: []
 };
 
 const getters = {
-    getAvailableFoods: state => state.availableFoods,
-    getSelectedCalendarDate: state => state.selectedCalendarDate,
-    getManufacturers: state => state.manufacturers,
-    getManufacturerById: state => id => {
-        return find(state.manufacturers, manufacturer => manufacturer.id === id);
+	 getCountDemandes: state => {
+        return state.countDemandes;
     },
-    getIsAuthenticated: state => {
-        return state.isAuthenticated;
+	 getCountUsers: state => {
+        return state.countUsers;
+    },
+	 getAllDemandes: state => {
+        return state.demandes;
+    },
+	 getOptions: state => {
+	
+        return state.options;
+    }
+	,
+	 getDevise: state => {
+	
+        return state.devise;
     }
 };
 
 const actions = {
-    countDemandes({ commit }) {
-        Vue.http.get('https://eskodb-f2a5.restdb.io/rest/demandes?totals=true&count=true',    {headers: {'x-apikey':'8839bfd1e5fa501a918576b63e8813bf00e74'}},{crossDomain: "true"})
+    requestCountDemandes({ commit }) {
+        Vue.http.get('https://eskodb-f2a5.restdb.io/rest/demandes?totals=true&count=true',    {headers: {'x-apikey':'5a50e16e7679b5244b6632d4'}})
 		.then(response => {
-            commit('countDemandes', response.body.totals.count);
+           commit('setCountDemandes', response.body.totals.count);
         });
+		
     },
-    requestManufacturerList({ commit }) {
-        Vue.http.get('manufacturers?limit=100').then(response => {
-            commit('setManufacturers', response.body._embedded.items);
+	 requestCountUsers({ commit }) {
+        Vue.http.get('https://eskodb-f2a5.restdb.io/rest/inscrits?totals=true&count=true',    {headers: {'x-apikey':'5a50e16e7679b5244b6632d4'}})
+		.then(response => {
+           commit('setCountUsers', response.body.totals.count);
         });
+		
     },
-    updateFoodInformation({ commit }, foodId) {
-        Vue.http.get(`foods/${foodId}`).then(response => {
-            commit('updateFood', response.body);
+	 requestAllDemandes({ commit }) {
+        Vue.http.get('https://eskodb-f2a5.restdb.io/rest/demandes',    {headers: {'x-apikey':'5a50e16e7679b5244b6632d4'}})
+		.then(response => {
+           commit('setAllDemandes', response.body);
         });
+		
     },
-    renewToken({ commit }, oldAuthToken) {
-        console.log('renew token');
-        Vue.http.post('login/renew', { token: oldAuthToken }).then(response => {
-            localStorage.setItem('authToken', response.body.authToken);
-            commit('setIsAuthenticated', true);
-        });
+	
+	 requestDevise({ commit }) {
+        
+           commit('setDevise','Z');
+		
     }
 };
 
 const mutations = {
-    setIsAuthenticated(state, isAuthenticated) {
-        state.isAuthenticated = isAuthenticated;
-        state.authErrorMessage = '';
+	setCountDemandes(state, countDemandes) {
+        state.countDemandes = countDemandes;
     },
-    setAvailableFoods(state, foods = []) {
-        state.availableFoods = foods;
+	setCountUsers(state, countDemandes) {
+        state.countUsers = countUsers;
     },
-    setSelectedCalendarDate(state, date = moment()) {
-        state.selectedCalendarDate = date;
+	setAllDemandes(state, demandes) {
+        state.demandes = demandes;
     },
-    setManufacturers(state, manufacturers = []) {
-        state.manufacturers = manufacturers;
-    },
-    updateFood(state, newFood) {
-        const index = findIndex(state.availableFoods, oldFood => oldFood.id === newFood.id);
-        state.availableFoods.splice(index, 1, newFood);
+	setDevise(state, devise) {
+        state.devise = devise;
     }
 };
 
