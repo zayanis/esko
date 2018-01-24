@@ -2,6 +2,8 @@ var path = require('path')
 var webpack = require('webpack')
 var DotenvPlugin = require('webpack-dotenv-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/main.js',
@@ -10,6 +12,13 @@ module.exports = {
     publicPath: '/dist/',
     filename: 'build.js'
   },
+  
+   plugins: [
+    new CopyWebpackPlugin([{
+      from: './*.html'
+    }])
+  ],
+  
   module: {
     rules: [
       {
