@@ -1,33 +1,35 @@
 <template>
     <div>
-        <div class="ui grid container">
-            <div class="row">
-                <div class="column">
-                    <div class="ui inverted labeled icon menu right">
-                       
-                        <router-link to="/profile" class="item" active-class="active">
-                            <i class="legal icon"></i>
+        <div class="ui  container">
+		<div class="ui secondary pointing menu">
+				  <a class="item">
+					  <router-link to="/profile" class="item" active-class="active">
                             Profile
                         </router-link>
-                        <router-link to="/demandes" class="item" active-class="active">
-                            <i class="users icon"></i>
-                            Demandes
+				  </a>
+				  <a class="item">
+					   <router-link to="/annonces" class="item" active-class="active">
+                            Annonces
                         </router-link>
-                        <router-link to="/taux" class="item" active-class="active">
-                            <i class="currency icon"></i>
-                            Taux
+				  </a>
+				  <a class="item">
+					      <router-link to="/statistiques" class="item" active-class="active">
+                            Statistiques
                         </router-link>
-                        <div class="right item">
-                            <div class="middle aligned content">
-                                <a href="#" class="ui inverted button" @click="onLogoutClicked">
-                                    Logout
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+				  </a>
+			  <div class="ui right item">
+				 <a class="item" @click="onLogoutClicked">
+				 <router-link to="/" class="item" active-class="active">
+                      Logout
+                        </router-link>
+						</a>
+			  </div>
+	
+		
+		</div>
+		
+		
+           
     </div>
 	
 
@@ -35,11 +37,35 @@
 </template>
 
 <script>
+
+import { mapGetters, mapMutations } from 'vuex';
+
 export default {
+
+data() {
+        return {
+          isAuthenticated: false
+        }
+    },
+	 beforeCreate: function (){
+	
+	 },
+    mounted() {
+
+	
+	if (this.$session.exists()) {
+		this.isAuthenticated = true;
+	  }
+	  		this.$forceUpdate();
+    },
+	 
     methods: {
         onLogoutClicked() {
-            localStorage.removeItem('authToken');
-          //  this.$store.commit('setIsAuthenticated', false);
+			this.$session.destroy();
+			localStorage.removeItem('authToken');
+            this.$store.commit('setisAuthenticated', false);
+	
+			
         }
     }
 }

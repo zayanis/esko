@@ -1,11 +1,11 @@
 <template>
     <div>
         <app-menu></app-menu>
-        <div class="ui grid container">
+        <div class="ui container">
             <div class="row">
-                <div class="column"><!-- this row intentionally left blank --></div>
+                <div class="column"></div>
             </div>
-            <transition name="fade" mode="out-in">
+            <transition name="fade" mode="in-out">
                 <keep-alive>
                     <router-view></router-view>
                 </keep-alive>
@@ -16,11 +16,14 @@
 
 <script>
 import Menu from './Menu.vue';
-import moment from 'moment';
 
 export default {
     components: {
-        'app-menu': Menu,
+        'app-menu': Menu
+    },
+	data() {
+        return {
+        }
     }
 }
 </script>
