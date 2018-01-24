@@ -1,8 +1,8 @@
 <template>
-    <div>
-		
+	   <div>
         <transition name="fade" mode="out-in" appear>
             <keep-alive>
+                <app-login v-if="!isAuthenticated" @loggedIn="onSuccessfulLogin"></app-login>
                 <app-accueil></app-accueil>
             </keep-alive>
         </transition>
@@ -11,23 +11,46 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import accueil from './components/Dashboard.vue'
+import dashboard from './components/Dashboard.vue';
+import login from './components/Login.vue';
 
 
 export default {
     components: {
-        'app-accueil': accueil,
-	
-        
+        'app-accueil': dashboard,
+		'app-login': login
+ 
+    },
+data() {
+        return {
+            
+        }
     },
     computed: {
         ...mapGetters({
+		isAuthenticated: 'getisAuthenticated'
         })
     },
     methods: {
+	        onSuccessfulLogin(authToken) {
+            localStorage.setItem('authToken', authToken);
+           this.$store.commit('setisAuthenticated', true);
+        }
     },
     created() {
-       
+	
+	if( this.$session.exists()){
+	      const authToken = localStorage.getItem('authToken');
+
+        if (authToken !== null) {
+            this.onSuccessfulLogin(authToken);
+        }
+	}
+	else{
+					localStorage.removeItem('authToken');
+            this.$store.commit('setisAuthenticated', false);
+	}
+     
     }
 }
 </script>

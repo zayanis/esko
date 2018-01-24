@@ -1,19 +1,21 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import accueil from './components/Accueil.vue';
-import demandes from './components/Demandes.vue';
+import annonces from './components/Annonces.vue';
 import profile from './components/Profile.vue';
-import taux from './components/Taux.vue';
+import statistiques from './components/Statistiques.vue';
+import login from './components/Login.vue';
 
 Vue.use(VueRouter);
 
 export default new VueRouter({
     routes: [
         { path: '/', redirect: '/accueil' },
-        { path: '/accueil', component: accueil },
-		{ path: '/demandes', component: demandes },
+		{ path: '/accueil', component: accueil },
+		{ path: '/annonces', component: annonces },
 		{ path: '/profile', component: profile },
-		{ path: '/taux', component: taux }
+		{ path: '/statistiques', component: statistiques },
+		{ path: '/login', component: login }
 		
     ]
 });
