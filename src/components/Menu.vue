@@ -17,13 +17,13 @@
                             Statistiques
                         </router-link>
 				  </a>
-			  <div class="ui right item">
-				 <a class="item" @click="onLogoutClicked">
-				 <router-link to="/" class="item" active-class="active">
+			
+				 <a class="right item" @click="onLogoutClicked">
+				 <router-link to="/" class="item" >
                       Logout
                         </router-link>
 						</a>
-			  </div>
+		
 	
 		
 		</div>
