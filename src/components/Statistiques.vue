@@ -44,7 +44,7 @@
 	</table>
 	
 
-		<modal name="detail" height="auto" :scrollable="true"  :draggable = "true">
+		<modal name="detail_stat" height="auto" :scrollable="true"  :draggable = "true">
 		<app-detail-demande :selectedDemande="this.selectedDemande"></app-detail-demande>
 	</modal>
 	
@@ -85,7 +85,7 @@ components: {
 	
 	onDetailDemande(demande) {
 		this.selectedDemande= demande;
-		  this.$modal.show('detail');
+		  this.$modal.show('detail_stat');
 		  
 	},
 		supprimer(demande) {
@@ -113,9 +113,9 @@ components: {
 	}
        
     },
-    created() {
-					this.loader= true;
-
+    mounted() {
+			this.loader= true;
+			this.demandes=null;
 			var username= localStorage.getItem('authToken');
 			var request = '{"user.mail":"' +username+'","ACTIVE": true}';
 			this.$store.dispatch('requestDemandesByPays',request);

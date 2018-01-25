@@ -77,12 +77,12 @@
 		<button v-on:click="afficherAjoutDemande();" class="ui right primary button">Ajouter une demande</button>
 	</div>
 
-	<modal name="detail" height="auto" :scrollable="true"  :draggable = "true">
+	<modal name="detail" :width="auto" :height="auto" :scrollable="true"  :draggable = "true">
 		<app-detail-inscrit :selectedDemande="this.selectedDemande"></app-detail-inscrit>
 	</modal>
   
 	  
-	<modal name="ajout" :width="800"  :height="400"  :scrollable="true" :draggable = "true">
+	<modal name="ajout" :width="800"  :height="300"  :scrollable="true" :draggable = "true">
 		<app-ajout-demande></app-ajout-demande>
     </modal>
 	
@@ -112,22 +112,28 @@ data() {
 			paysfrom :'',
 			paysdest :'',
 			loader: false,
-            selectedDemande: null
+            selectedDemande: null,
+			demandes: []
         }
     },
     computed: {
         ...mapGetters({
 		  pays: 'getPays',
-		  demandes: 'getAllDemandes',
 		   inscrit: 'getInscrit'
         })
     },
 	mounted() {
-
+			this.loader= false;
 			this.$store.dispatch('requestPays');
 	
     },
+
+  beforeRouteUpdate(to) {
+		 this.loader= false;
+		 this.demandes=null;
+	},
 	 created() {
+	
       if( this.inscrit == null || this.inscrit == "" ){
 	  var username= localStorage.getItem('authToken');
 	  var request = '{"mail":"' +username +'"}';
@@ -142,7 +148,12 @@ data() {
 			if(this.paysfrom &&  this.paysdest ){
 				this.loader= true;
 			var request = '{"FROM":"' +this.paysfrom+ '", "DEST": "' + this.paysdest +'", "ACTIVE":true}';
-			           this.$store.dispatch('requestDemandesByPays',request);
+			           //this.$store.dispatch('requestDemandesByPays',request);
+			this.$http.get('https://eskodb-f2a5.restdb.io/rest/demandes',    {params:  {'q':`${request}`}})
+			.then(response => {
+					//commit('setAllDemandes', response.body);
+					this.demandes = response.body;
+				});
 			}
         }, 
 		onDetailUser(demande) {
@@ -173,6 +184,7 @@ data() {
 			this.paysdest=pays;
         },
 		 demandes(demandes) {
+		 this.demandes= demandes;
 			this.loader= false;
         }
 		
