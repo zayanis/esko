@@ -1,8 +1,15 @@
-            <template >
-			<div>
-			  {{ error }}
+            <template>
+
+  <div class="ui two column centered grid">
+
+			    <div class="column"></div>
+				<div class="column"></div>
+				<div class="column"></div>
+				
 					     <form class="ui form" >
-								  <div class="field">
+						 
+						    <div class="two fields">
+								 	  <div class="field">
 									<semantic-ui-dropdown
 														:selection="true"
 														:fluid="true"
@@ -12,36 +19,35 @@
 									></semantic-ui-dropdown>
 								</div>
 
-									
-					  <div class="field">
-
-						<semantic-ui-dropdown
+								  <div class="field">
+															<semantic-ui-dropdown
 											:selection="true"
 											:fluid="true"
 											text="Vers"
 											:items="pays"
 											v-model="demandeDest"
 									></semantic-ui-dropdown>
-
-					</div>		
-						
-				  <div class="field">
-						<div class="ui input focus">
-							<input type="number" placeholder="Montant" v-model="montant">
-						</div>
-					</div>	
-				  <div class="field">
-						<div class="ui input focus">
-							<input type="number" placeholder="Taux"  v-model="taux">
-						</div>
-					</div>	
-							
-						  <div class="field">
-								<div class="ui input focus">
-									<input type="text" placeholder="Devise" v-bind:value=this.devise disabled>
+								  </div>
+							</div>
+						 
+						 
+						 
+		
+					<div class="inline fields">
+								<div class="eight wide field">
+									<label>Montant demand&eacute; en {{devise}} </label>
+									  <input type="number" min="0" step="100" placeholder="Montant" v-model="montant">
 								</div>
-					</div>	
-
+								<div class="three wide field">
+								<label>Taux </label>
+								  <input type="number" step="0.01" placeholder="Taux"  v-model="taux">
+								</div>
+								<div class="five wide field">
+								  <input type="number" placeholder="Montant à " v-model="montant_from" disabled>
+								  <label>{{devise_from}}</label>
+								</div>
+						</div>
+						
 				  <div class="field">
 						<div class="ui input focus">
 							<input type="date" placeholder="Date" v-model="date">
@@ -53,8 +59,14 @@
 							<button v-on:click="ajouterDemande();" class="ui primary button">Ajouter</button>
 							</div>  
 						</div>
+						
+						
+						
 				</form>
-</div>
+
+
+	</div>			
+
 </template>
 <script>
 import { mapGetters, mapMutations } from 'vuex';
@@ -72,9 +84,11 @@ data() {
 			demandeDest :'',
 			demandeFrom :'',
 			montant :0,
+			montant_from :0,
 			date :'',
 			taux: 0,
 			devise: '',
+			devise_from :'',
 
 			  error: ''
         }
@@ -135,9 +149,11 @@ data() {
                 this.demandeFrom = '';
                 this.demandeDest = '';
 				this.devise='',
+				this.devise_from='',
 				this.montant=0;
 				this.taux=0;
 				this.date='';
+				this.montant_from=0;
 				  this.$modal.hide('ajout');
             });
 			}	
@@ -165,7 +181,20 @@ data() {
 							}
 					}
         }
-		
+		,
+		 demandeFrom(pays) {
+					for (let i in this.pays) {
+						if( this.pays[i].value == pays){
+								this.devise_from=this.pays[i].devise;
+							}
+					}
+        },
+		taux (taux){
+			this.montant_from = this.taux * this.montant;
+		},
+		montant (montant){
+			this.montant_from = this.taux * this.montant;
+		}
     }	
 
 }
