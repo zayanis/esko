@@ -18,6 +18,11 @@ module.exports = {
       from: './*.html'
     }])
   ],
+    plugins: [
+    new CopyWebpackPlugin([{
+      from: './img/*.*'
+    }])
+  ],
   
   module: {
     rules: [
