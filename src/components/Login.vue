@@ -1,13 +1,17 @@
 <template>
 <div>
 
+
+
+
+
 <br></br><br></br><br></br><br></br><br></br>
-<div class="ui middle aligned center aligned grid">
+<div class="ui middle center  grid">
 
     <div class="column">
-        <div class="ui center aligned page grid">
+        <div class="ui center  page grid">
             <div class="column">
-                <div class="ui left aligned segment">
+                <div class="ui left">
                
 
                     <div class="ui form">
@@ -28,18 +32,64 @@
                       
 						
 						   <div class="ui negative message" v-if="error !== null">
-								<div class="header">{{ error.type | startCase }}</div>
 							<p>{{ error }}</p>
 							</div>
                     </div>
 					
                 </div>
-				  <!--  input type="submit" name="submit" @click="onLoginButtonClick" class="ui inverted blue button  middle" / -->
+				<br></br>
 				    <button   @click="onLoginButtonClick" class="ui inverted blue button  middle" > Se loguer </button>
             </div>
         </div>
     </div>
 </div>
+<br></br><br></br><br></br><br></br><br></br>
+
+
+
+<div class="ui middle aligned center aligned grid">
+
+<div class="ui items">
+  <div class="item">
+    <div class="ui tiny image">
+      <img src="/img/frais.jpg">
+    </div>
+    <div class="content">
+      <div class="header">GRATUIT</div>
+      <div class="description">
+        <p>Aucun frais &agrave; pr&eacute;voir. L'inscription, la consultation et d&eacute;pot des demandes sont gratuites</p>
+      </div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="ui tiny image">
+       <img src="/img/demandes.jpg">
+    </div>
+    <div class="content">
+      <div class="header">{{totalDemandes}}</div>
+      <div class="description">
+        <p>Demandes cr&eacute;es</p>
+      </div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="ui tiny image">
+     <img src="/img/inscrit.jpg">
+    </div>
+    <div class="content">
+      <div class="header">{{totalUsers}}</div>
+      <div class="description">
+        <p>Utilisateurs inscrits</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+
+
 </div>
 </template>
 
@@ -57,19 +107,26 @@ export default {
     },
     computed: {
         ...mapGetters({
+		   totalDemandes: 'getCountDemandes',
+			totalUsers: 'getCountUsers',
 		  isAuthenticated: 'getisAuthenticated'
         })
     },
+	 beforeCreate: function (){
+	
+	  this.$store.dispatch('requestCountDemandes');
+		this.$store.dispatch('requestCountUsers');
+	 },
 
     methods: {
         onLoginButtonClick() {
 		this.error= null;
 				
 					if( this.username == null || this.username == "" ){
-					this.error= "E-mail non renseigné";
+					this.error= 'Champs e-mail vide';
 					}
 					else if( this.password == null || this.password == "" ){
-					this.error= "Mot de passe non renseigné";
+					this.error= "Champs Mot de passe vide";
 					}
 					else
 					{
@@ -78,11 +135,9 @@ export default {
 					this.$http.get('https://eskodb-f2a5.restdb.io/rest/inscrits',    {headers: {'x-apikey':'5a50e16e7679b5244b6632d4'}, params:  {'q': `{"mail":"${username.value}", "password": "${password.value}"}`}})
 					.then(response => {
 					var body = response.body.length;
-				//	var mail = response.body[0].mail;
-					
 					if(response.body.length == 0 ){
 						 this.username = this.password = null;
-						 	 this.error = "Authentification echoué";
+						 	 this.error = "Adresse e-mail ou mot de passe incorrect";
 						
 					}
 					else{
@@ -104,6 +159,14 @@ export default {
 				
 				
         }
-    }
+    },
+	watch: {
+	totalDemandes (total){
+	this.totalDemandes = total;
+	},
+	totalUsers (total){
+	this.totalUsers = total;
+	}
+	},
 }
 </script>
