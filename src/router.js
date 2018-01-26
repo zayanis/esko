@@ -10,7 +10,7 @@ Vue.use(VueRouter);
 
 export default new VueRouter({
     routes: [
-        { path: '/', redirect: '/accueil' },
+        { path: '/', redirect: '/annonces' },
 		{ path: '/accueil', component: accueil },
 		{ path: '/annonces', component: annonces },
 		{ path: '/profile', component: profile },
