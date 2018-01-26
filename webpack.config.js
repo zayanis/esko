@@ -15,13 +15,12 @@ module.exports = {
   
    plugins: [
     new CopyWebpackPlugin([{
+      from: './img/*.*'
+    }]),
+	 new CopyWebpackPlugin([{
       from: './*.html'
     }])
-  ],
-    plugins: [
-    new CopyWebpackPlugin([{
-      from: './img/*.*'
-    }])
+	
   ],
   
   module: {
