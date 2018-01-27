@@ -1,10 +1,26 @@
 <template >
+
 	<div class="ui middle aligned center aligned grid">
+	
 				<div class="column">
 					<div class="ui center aligned page grid">
 						<div class="column">
 							<div class="ui left aligned segment">
 								<div class="ui form">
+								<div class="field">
+										<label for="adresse">Montant en {{selectedDemande.DEVISE}}:</label>
+										<div class="ui icon input">
+											<input type="text"   name="montant" id="montant"  v-bind:value=this.selectedDemande.MONTANT disabled /> <i class="location eur icon"></i>
+
+										</div>
+									</div>
+											<div class="field">
+										<label for="adresse">Taux:</label>
+										<div class="ui icon input">
+											<input type="text"   name="taux" id="taux"  v-bind:value=this.selectedDemande.TAUX disabled /> <i class="location line chart  icon"></i>
+
+										</div>
+									</div>
 									<div class="field">
 										<label for="mail">E-mail:</label>
 										<div class="ui icon input">

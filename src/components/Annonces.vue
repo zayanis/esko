@@ -43,7 +43,7 @@
 	  </div>
 	</div>
    
-	 <table class="ui red table sortable">
+	 <table class="ui blue table">
 	  <thead>
 		<tr>
 			<th>De</th>
@@ -66,8 +66,11 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<th><div class="ui red basic label" v-if="demandes.length < 1">Aucune demande trouvée</div></th>
-				<th colspan="7"></th>
+				<th></th>
+				<th></th>
+				<th>
+				<div class="ui red  label" v-if="demandes.length < 1">Aucune demande trouv&eacute;e</div></th>
+				<th></th>
 			</tr>
 		</tfoot>
 	</table>
@@ -77,7 +80,7 @@
 		<button v-on:click="afficherAjoutDemande();" class="ui right primary button">Ajouter une demande</button>
 	</div>
 
-	<modal name="detail" :width="auto" :height="auto" :scrollable="true"  :draggable = "true">
+	<modal name="detail" :width="800"  :height="400"  :draggable = "true">
 		<app-detail-inscrit :selectedDemande="this.selectedDemande"></app-detail-inscrit>
 	</modal>
   

@@ -48,11 +48,13 @@
 								</div>
 						</div>
 						
-				  <div class="field">
-						<div class="ui input focus">
-							<input type="date" placeholder="Date" v-model="date">
+
+						<div class="inline fields">
+								<div class="eight wide field">
+									<label>Date </label>
+									  <input type="date" placeholder="Date" v-model="date">
+								</div>
 						</div>
-					</div>						
 			
 					  <div class="field">
 						  <div>

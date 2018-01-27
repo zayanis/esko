@@ -12,7 +12,7 @@
 
 
    
-	 <table class="ui red table sortable">
+	 <table class="ui blue table sortable">
 	  <thead>
 		<tr>
 			<th>De</th>
