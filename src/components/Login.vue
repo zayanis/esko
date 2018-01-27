@@ -108,15 +108,15 @@ export default {
     },
     computed: {
         ...mapGetters({
-		   totalDemandes: 'getCountDemandes',
-			totalUsers: 'getCountUsers',
+		  // totalDemandes: 'getCountDemandes',
+			//totalUsers: 'getCountUsers',
 		  isAuthenticated: 'getisAuthenticated'
         })
     },
 	 beforeCreate: function (){
 	
-	  this.$store.dispatch('requestCountDemandes');
-		this.$store.dispatch('requestCountUsers');
+	 // this.$store.dispatch('requestCountDemandes');
+		//this.$store.dispatch('requestCountUsers');
 	 },
 
     methods: {
@@ -160,14 +160,6 @@ export default {
 				
 				
         }
-    },
-	watch: {
-	totalDemandes (total){
-	this.totalDemandes = total;
-	},
-	totalUsers (total){
-	this.totalUsers = total;
-	}
-	},
+    }
 }
 </script>
