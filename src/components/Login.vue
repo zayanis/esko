@@ -38,7 +38,7 @@
 					
                 </div>
 				<br></br>
-				    <button   @click="onLoginButtonClick" class="ui inverted blue button  middle" > Se loguer </button>
+				    <button   @click="onLoginButtonClick" class="ui primary button middle" > Se loguer </button>
             </div>
         </div>
     </div>
@@ -47,7 +47,7 @@
 
 
 
-<div class="ui middle aligned center aligned grid">
+<!-- div class="ui middle aligned center aligned grid">
 
 <div class="ui items">
   <div class="item">
@@ -85,10 +85,10 @@
   </div>
 </div>
 
-</div>
+</div -->
 
 
-
+<div class="ui active inverted dimmer" v-if="loader" ><div class="ui text loader"></div></div>
 
 </div>
 </template>
@@ -102,6 +102,7 @@ export default {
         return {
             error: null,
             username: null,
+			loader: false,
             password: null
         }
     },
@@ -131,7 +132,7 @@ export default {
 					else
 					{
 			
-			
+					this.loader= true;
 					this.$http.get('https://eskodb-f2a5.restdb.io/rest/inscrits',    {headers: {'x-apikey':'5a50e16e7679b5244b6632d4'}, params:  {'q': `{"mail":"${username.value}", "password": "${password.value}"}`}})
 					.then(response => {
 					var body = response.body.length;

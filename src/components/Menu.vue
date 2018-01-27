@@ -3,21 +3,25 @@
         <div class="ui  container">
 		<div class="ui secondary pointing menu">
 				  <a class="item">
-					  <router-link to="/profile" class="item" active-class="active">
-                            Profile
-                        </router-link>
-				  </a>
-				  <a class="item">
-					   <router-link to="/annonces" class="item" active-class="active">
+					  <router-link to="/annonces" class="item" active-class="active">
                             Annonces
                         </router-link>
 				  </a>
 				  <a class="item">
-					      <router-link to="/statistiques" class="item" active-class="active">
+					   <router-link to="/statistiques" class="item" active-class="active">
                             Statistiques
                         </router-link>
 				  </a>
-			
+				  <a class="item">
+					      <router-link to="/profile" class="item" active-class="active">
+                            Profile
+                        </router-link>
+				  </a>
+				  <a class="item">
+					      <router-link to="/parrainage" class="item" active-class="active">
+                            Parrainage
+                        </router-link>
+				  </a>
 				 <a class="right item" @click="onLogoutClicked">
 				 <router-link to="/" class="item" >
                       Logout

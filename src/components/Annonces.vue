@@ -66,10 +66,10 @@
 		</tbody>
 		<tfoot>
 			<tr>
+				
 				<th></th>
 				<th></th>
-				<th>
-				<div class="ui red  label" v-if="demandes.length < 1">Aucune demande trouv&eacute;e</div></th>
+				<th></th>
 				<th></th>
 			</tr>
 		</tfoot>

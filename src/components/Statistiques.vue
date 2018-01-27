@@ -37,8 +37,11 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<th><div class="ui red basic label" v-if="demandes.length < 1">Aucune demande trouvée</div></th>
-				<th colspan="7"></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
 			</tr>
 		</tfoot>
 	</table>
