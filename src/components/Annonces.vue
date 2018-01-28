@@ -80,7 +80,7 @@
 		<button v-on:click="afficherAjoutDemande();" class="ui right primary button">Ajouter une demande</button>
 	</div>
 
-	<modal name="detail" :width="800"  :height="400"  :draggable = "true">
+	<modal name="detail" :width="800"  :height="500"  :draggable = "true">
 		<app-detail-inscrit :selectedDemande="this.selectedDemande"></app-detail-inscrit>
 	</modal>
   

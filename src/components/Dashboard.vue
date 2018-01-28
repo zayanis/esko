@@ -11,15 +11,19 @@
                 </keep-alive>
             </transition>
         </div>
+		<app-footer></app-footer>
     </div>
 </template>
 
 <script>
 import Menu from './Menu.vue';
+import Footer from './Footer.vue';
+
 
 export default {
     components: {
-        'app-menu': Menu
+        'app-menu': Menu,
+		'app-footer': Footer
     },
 	data() {
         return {

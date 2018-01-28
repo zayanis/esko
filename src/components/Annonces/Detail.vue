@@ -8,12 +8,20 @@
 							<div class="ui left aligned segment">
 								<div class="ui form">
 								<div class="field">
-										<label for="adresse">Montant en {{selectedDemande.DEVISE}}:</label>
+										<label for="adresse">Montant à recevoir en {{selectedDemande.DEVISE}}:</label>
 										<div class="ui icon input">
 											<input type="text"   name="montant" id="montant"  v-bind:value=this.selectedDemande.MONTANT disabled /> <i class="location eur icon"></i>
 
 										</div>
 									</div>
+											<div class="field">
+										<label for="adresse">Montant à envoyer:</label>
+										<div class="ui icon input">
+											<input type="text"   name="montant_2" id="montant_2"  v-bind:value=this.montant_envoye disabled /> <i class="location line chart  icon"></i>
+
+										</div>
+									</div>
+									
 											<div class="field">
 										<label for="adresse">Taux:</label>
 										<div class="ui icon input">
@@ -21,6 +29,7 @@
 
 										</div>
 									</div>
+									
 									<div class="field">
 										<label for="mail">E-mail:</label>
 										<div class="ui icon input">
@@ -56,5 +65,18 @@
 export default {
   props: ['selectedDemande'],
 	
-}
+
+data() {
+        return {
+
+			montant_envoye :0
+        }
+    },
+	 created() {
+	
+     this.montant_envoye = this.selectedDemande.TAUX * this.selectedDemande.MONTANT;
+		
+	  }
+
+	}
 </script>
