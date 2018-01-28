@@ -43,50 +43,6 @@
         </div>
     </div>
 </div>
-<br></br><br></br><br></br><br></br><br></br>
-
-
-
-<!-- div class="ui middle aligned center aligned grid">
-
-<div class="ui items">
-  <div class="item">
-    <div class="ui tiny image">
-      <img src="/img/frais.jpg">
-    </div>
-    <div class="content">
-      <div class="header">GRATUIT</div>
-      <div class="description">
-        <p>Aucun frais &agrave; pr&eacute;voir. L'inscription, la consultation et d&eacute;pot des demandes sont gratuites</p>
-      </div>
-    </div>
-  </div>
-  <div class="item">
-    <div class="ui tiny image">
-       <img src="/img/demandes.jpg">
-    </div>
-    <div class="content">
-      <div class="header">{{totalDemandes}}</div>
-      <div class="description">
-        <p>Demandes cr&eacute;es</p>
-      </div>
-    </div>
-  </div>
-  <div class="item">
-    <div class="ui tiny image">
-     <img src="/img/inscrit.jpg">
-    </div>
-    <div class="content">
-      <div class="header">{{totalUsers}}</div>
-      <div class="description">
-        <p>Utilisateurs inscrits</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-</div -->
-
 
 <div class="ui active inverted dimmer" v-if="loader" ><div class="ui text loader"></div></div>
 
@@ -108,16 +64,10 @@ export default {
     },
     computed: {
         ...mapGetters({
-		  // totalDemandes: 'getCountDemandes',
-			//totalUsers: 'getCountUsers',
 		  isAuthenticated: 'getisAuthenticated'
         })
     },
-	 beforeCreate: function (){
 	
-	 // this.$store.dispatch('requestCountDemandes');
-		//this.$store.dispatch('requestCountUsers');
-	 },
 
     methods: {
         onLoginButtonClick() {
@@ -133,7 +83,7 @@ export default {
 					{
 			
 					this.loader= true;
-					this.$http.get('https://eskodb-f2a5.restdb.io/rest/inscrits',    {headers: {'x-apikey':'5a50e16e7679b5244b6632d4'}, params:  {'q': `{"mail":"${username.value}", "password": "${password.value}"}`}})
+					this.$http.get('rest/inscrits',    {headers: {'x-apikey':'5a50e16e7679b5244b6632d4'}, params:  {'q': `{"mail":"${username.value}", "password": "${password.value}"}`}})
 					.then(response => {
 					var body = response.body.length;
 					if(response.body.length == 0 ){
@@ -142,12 +92,11 @@ export default {
 						
 					}
 					else{
-						
-							 this.$session.start();
-						 this.$emit('loggedIn', this.username);
-						 var request = '{"mail":"' +this.username+ '", "password": "' + this.password +'"}';
-						this.$store.dispatch('requestInscrit',request);
-						 this.error = this.username = this.password = null;
+						this.$session.start();
+						this.$emit('loggedIn', this.username);
+						this.$store.state.inscrit = response.body;
+						this.loader= false;
+						this.error = this.username = this.password = null;
 					}
 					
 					}, error => {

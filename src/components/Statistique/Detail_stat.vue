@@ -58,12 +58,10 @@ export default {
 			nombre_vue: 0
         }
     },
-	created() {
-      //this.selectedDemande
-	  var mail= this.selectedDemande.user[0].mail;
-	  //var request = '{"Demande.user.mail":"'+mail+'"}&h={"$aggregate":["COUNT:"]}';
-		var request = '{"Demande.user.mail":"'+mail+'"}';
-			 this.$http.get('https://eskodb-f2a5.restdb.io/rest/statistiques',    {params:  {'q':`${request}` , 'h':'{"$aggregate":["COUNT:"]}'}})
+	mounted() {
+	  var demandeId= this.selectedDemande._id;
+		var request = '{"Demande._id":"'+demandeId+'"}';
+			 this.$http.get('rest/statistiques',    {params:  {'q':`${request}` , 'h':'{"$aggregate":["COUNT:"]}'}})
 		.then(response => {
            this.nombre_vue= response.body["COUNT "];	   
         });

@@ -52,21 +52,21 @@ const getters = {
 
 const actions = {
     requestCountDemandes({ commit }) {
-        Vue.http.get('https://eskodb-f2a5.restdb.io/rest/demandes?totals=true&count=true')
+        Vue.http.get('rest/demandes?totals=true&count=true')
 		.then(response => {
            commit('setCountDemandes', response.body.totals.count);
         });
 		
     },
 	 requestCountUsers({ commit }) {
-        Vue.http.get('https://eskodb-f2a5.restdb.io/rest/inscrits?totals=true&count=true')
+        Vue.http.get('rest/inscrits?totals=true&count=true')
 		.then(response => {
            commit('setCountUsers', response.body.totals.count);
         });
 		
     },
 	 requestAllDemandes({ commit }) {
-        Vue.http.get('https://eskodb-f2a5.restdb.io/rest/demandes')
+        Vue.http.get('rest/demandes')
 		.then(response => {
            commit('setAllDemandes', response.body);
         });
@@ -74,8 +74,7 @@ const actions = {
     },
 	requestDemandesByPays({ commit }, request) {
 	
-        //Vue.http.get('https://eskodb-f2a5.restdb.io/rest/demandes',    {headers: {'x-apikey':'5a50e16e7679b5244b6632d4'}, params:  {'q': `{"FROM":"${paysfrom}", "DEST": "${paysdest}"}`}})
-		Vue.http.get('https://eskodb-f2a5.restdb.io/rest/demandes',    {params:  {'q':`${request}`}})
+        Vue.http.get('rest/demandes',    {params:  {'q':`${request}`}})
 		.then(response => {
            commit('setAllDemandes', response.body);
         });
@@ -83,8 +82,8 @@ const actions = {
     },
 		requestStatistiques({ commit }, request) {
 	
-        //Vue.http.get('https://eskodb-f2a5.restdb.io/rest/demandes',    {headers: {'x-apikey':'5a50e16e7679b5244b6632d4'}, params:  {'q': `{"FROM":"${paysfrom}", "DEST": "${paysdest}"}`}})
-		Vue.http.get('https://eskodb-f2a5.restdb.io/rest/statistiques',    {params:  {'q':`${request}`}})
+        //Vue.http.get('rest/demandes',    {headers: {'x-apikey':'5a50e16e7679b5244b6632d4'}, params:  {'q': `{"FROM":"${paysfrom}", "DEST": "${paysdest}"}`}})
+		Vue.http.get('rest/statistiques',    {params:  {'q':`${request}`}})
 		.then(response => {
            commit('setAllDemandes', response.body);
         });
@@ -92,9 +91,8 @@ const actions = {
     },
 	
 	 requestInscrit({ commit }, request) {
-      //   commit('setisAuthenticated', true);
          
-		 Vue.http.get('https://eskodb-f2a5.restdb.io/rest/inscrits',    {params:  {'q':`${request}`}})
+		 Vue.http.get('rest/inscrits',    {params:  {'q':`${request}`}})
 		.then(response => {
            commit('setInscrit',  response.body);
 		  
@@ -103,7 +101,7 @@ const actions = {
 		
     },
 	 requestPays({ commit }) {
-         Vue.http.get('https://eskodb-f2a5.restdb.io/rest/pays')
+         Vue.http.get('rest/pays')
 		.then(response => {
            commit('setPays',  response.body);
 		  

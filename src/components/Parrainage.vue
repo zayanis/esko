@@ -52,22 +52,23 @@ export default {
     },
 data() {
         return {
-           mail :''
+           mail : '',
+		   html : 'html',
+		   subject : 'subject',
+		   sendername : 'sendername'
         }
     },
     methods: {
         Envoyer() {
 		
-		this.$http.post('https://eskodb-f2a5.restdb.io/mail',   {
+		this.$http.post('mail',   {
 									to: this.mail,
-									subject: "parraignage de test",
-									html: "mon html",
-									company: "Acme Inc", 
-									sendername: "Acme customer support"
+									subject: this.subject,
+									html: this.html,
+									sendername: this.sendername
 			 
 			 })
 			 .then(response => {
-			 
 			 
             });
 		  
