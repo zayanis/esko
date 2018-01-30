@@ -3,22 +3,27 @@
 
 
 
-
-
 <br></br><br></br><br></br><br></br><br></br>
-<div class="ui middle center  grid">
 
-    <div class="column">
-        <div class="ui center  page grid">
-            <div class="column">
-                <div class="ui left">
-               
 
-                    <div class="ui form">
+<div class="ui two column centered grid">
+  <div class="column">   <div class="ui segment">
+      text1
+    </div>
+	</div>
+	
+	
+  <div class="four column centered row">
+    <div class="column">   <div class="ui segment">
+     text2
+	 
+    </div></div>
+    <div class="column">   <div class="ui segment">
+       <div class="ui form">
                         <div class="field">
                             <label for="username">E-mail:</label>
                             <div class="ui icon input">
-                                <input type="text" placeholder="Username" name="E-mail" id="username" v-model="username"/> <i class="user icon"></i>
+                                <input type="email" placeholder="Username" name="E-mail" id="username" v-model="username"/> <i class="user icon"></i>
 
                             </div>
                         </div>
@@ -35,14 +40,12 @@
 							<p>{{ error }}</p>
 							</div>
                     </div>
-					
-                </div>
-				<br></br>
+					<br></br>
 				    <button   @click="onLoginButtonClick" class="ui primary button middle" > Se loguer </button>
-            </div>
-        </div>
-    </div>
+    </div></div>
+  </div>
 </div>
+
 
 <div class="ui active inverted dimmer" v-if="loader" ><div class="ui text loader"></div></div>
 
@@ -85,11 +88,11 @@ export default {
 					this.loader= true;
 					this.$http.get('rest/inscrits',    {headers: {'x-apikey':'5a50e16e7679b5244b6632d4'}, params:  {'q': `{"mail":"${username.value}", "password": "${password.value}"}`}})
 					.then(response => {
-					var body = response.body.length;
+					//var body = response.body.length;
 					if(response.body.length == 0 ){
 						 this.username = this.password = null;
 						 	 this.error = "Adresse e-mail ou mot de passe incorrect";
-						
+						this.loader= false;
 					}
 					else{
 						this.$session.start();

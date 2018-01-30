@@ -4,11 +4,6 @@
 	<div class="ui top attached tabular menu">
 	  <div class="item"></div>
 	</div>
-	<div class="ui bottom attached tab segment">
-	  <p></p>
-	  <p></p>
-	  <p></p>
-	</div>
 
 	<div class="ui secondary  menu" >
 
@@ -43,18 +38,17 @@
 	  </div>
 	</div>
    
-	 <table class="ui blue table">
+	 <table class="ui  sortable blue table">
 	  <thead>
 		<tr>
-			<th>De</th>
-			<th>Vers</th>
-			<th>Date</th>
-			<th></th>
+			<th class="">De</th>
+			<th class="">Vers</th>
+			<th class="sorted">Date</th>
+			<th class=""></th>
 		</tr>
 	  </thead>
 	  
 		<tbody>
-	  
 		   <tr v-if="demandes.length > 0" v-for="demande in demandes">
 						   
 							<td>{{ demande.FROM }}</td>
@@ -66,7 +60,6 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				
 				<th></th>
 				<th></th>
 				<th></th>
@@ -126,15 +119,9 @@ data() {
         })
     },
 	mounted() {
-			this.loader= false;
 			this.$store.dispatch('requestPays');
 	
     },
-
-  beforeRouteUpdate(to) {
-		 this.loader= false;
-		 this.demandes=null;
-	},
 	 created() {
 	
       if( this.inscrit == null || this.inscrit == "" ){
@@ -147,24 +134,23 @@ data() {
     methods: {			
         rechercher() {
 	
-		
+			this.loader = true;
 			if(this.paysfrom &&  this.paysdest ){
-				this.loader= true;
+	
 			var request = '{"FROM":"' +this.paysfrom+ '", "DEST": "' + this.paysdest +'", "ACTIVE":true}';
-			           //this.$store.dispatch('requestDemandesByPays',request);
-			this.$http.get('https://eskodb-f2a5.restdb.io/rest/demandes',    {params:  {'q':`${request}`}})
+			this.$http.get('rest/demandes',    {params:  {'q':`${request}`}})
 			.then(response => {
-					//commit('setAllDemandes', response.body);
 					this.demandes = response.body;
 				});
+
 			}
+			
+				
         }, 
 		onDetailUser(demande) {
 			    this.$modal.show('detail');
 				this.selectedDemande=demande;
-				
-				
-							 this.$http.post('https://eskodb-f2a5.restdb.io/rest/statistiques',   {
+							 this.$http.post('rest/statistiques',   {
 									Demande: this.selectedDemande,
 									user: this.inscrit
 			 
@@ -188,7 +174,7 @@ data() {
         },
 		 demandes(demandes) {
 		 this.demandes= demandes;
-			this.loader= false;
+		 this.loader = false;
         }
 		
     },

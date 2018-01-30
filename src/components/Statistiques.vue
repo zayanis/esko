@@ -97,7 +97,7 @@ components: {
 		
 		
 		
-		this.$http.put('https://eskodb-f2a5.restdb.io/rest/demandes/'+this.selectedDemande._id,   {
+		this.$http.put('rest/demandes/'+this.selectedDemande._id,   {
 									ACTIVE: false
 			 
 			 })

@@ -2,7 +2,10 @@
     <div>
 	<br></br><br></br><br></br><br></br>
         <div class="ui  container">
-  <div class="ui mini secondary pointing menu">
+		<div class="ui   secondary  pointing menu">
+		   </div>
+  
+		<div class="ui mini secondary menu">
 				  <a class="item">
 					  <router-link to="/aide" class="item" active-class="active">
                             Comment ça marche
@@ -18,8 +21,8 @@
 		
 		
            
-    </div>
-	
+
+	</div>
 
 	   </div>
 </template>
