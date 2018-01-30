@@ -8,14 +8,14 @@
 							<div class="ui left aligned segment">
 								<div class="ui form">
 								<div class="field">
-										<label for="adresse">Montant à recevoir en {{selectedDemande.DEVISE}}:</label>
+										<label for="adresse">Montant à recevoir en {{selectedDemande.DEST}}:</label>
 										<div class="ui icon input">
 											<input type="text"   name="montant" id="montant"  v-bind:value=this.selectedDemande.MONTANT disabled /> <i class="location eur icon"></i>
 
 										</div>
 									</div>
 											<div class="field">
-										<label for="adresse">Montant à envoyer:</label>
+										<label for="adresse">Montant à donner en {{selectedDemande.FROM}}:</label>
 										<div class="ui icon input">
 											<input type="text"   name="montant_2" id="montant_2"  v-bind:value=this.montant_envoye disabled /> <i class="location line chart  icon"></i>
 

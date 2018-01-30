@@ -43,7 +43,7 @@
 								  <input type="number" step="0.01" placeholder="Taux"  v-model="taux">
 								</div>
 								<div class="five wide field">
-								  <input type="number" placeholder="Montant à " v-model="montant_from" disabled>
+								  <input type="number" placeholder="Montant" v-model="montant_from" disabled>
 								  <label>{{devise_from}}</label>
 								</div>
 						</div>
@@ -136,7 +136,7 @@ data() {
 						this.error="";
 	
 		
-			 this.$http.post('https://eskodb-f2a5.restdb.io/rest/demandes',   {
+			 this.$http.post('rest/demandes',   {
 									FROM: this.demandeFrom,
 									DEST: this.demandeDest,
 									DEVISE: this.devise,
@@ -144,7 +144,7 @@ data() {
 									TAUX: this.taux,
 									DATE: this.date,
 									ACTIVE: true,
-									user: this.inscrit
+									user: this.inscrit[0]._id
 			 
 			 })
 			 .then(response => {
