@@ -5,11 +5,12 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VueSession from 'vue-session';
 import VModal from 'vue-js-modal';
+import VeeValidate  from 'vee-validate';
 
 Vue.use(VModal);
 Vue.use(VueSession);
 Vue.use(Vuex);
-
+Vue.use(VeeValidate);
 
 
 
