@@ -3,7 +3,7 @@
         <transition name="fade" mode="out-in" appear>
             <keep-alive>
                 <app-login v-if="!isAuthenticated" @loggedIn="onSuccessfulLogin"></app-login>
-                <app-accueil></app-accueil>
+                <app-dashboard></app-dashboard>
             </keep-alive>
         </transition>
     </div>
@@ -17,7 +17,7 @@ import login from './components/Login.vue';
 
 export default {
     components: {
-        'app-accueil': dashboard,
+        'app-dashboard': dashboard,
 		'app-login': login
  
     },
