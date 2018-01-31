@@ -1,10 +1,14 @@
 <template>
 <div>
 
-<p><h1>text</h1></p>
-<div class="ui top attached tabular menu">
-  <div class="item"></div>
-</div>
+	<div class="ui top attached tabular menu">
+	  <div class="item">
+			<h2 class="ui blue header"> 
+				<i class="setting   icon"></i>
+				<div class="content">Modifier votre profil</div>
+			</h2>
+		</div>
+	</div>
 <div class="ui bottom attached tab segment">
   <p></p>
   <p></p>

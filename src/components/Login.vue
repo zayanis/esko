@@ -15,7 +15,7 @@
 	
   <div class="four column centered row">
     <div class="column">   <div class="ui segment">
-     text2
+     text3
 	 
     </div></div>
     <div class="column">   <div class="ui segment">
@@ -44,17 +44,22 @@
 				    <button   @click="onLoginButtonClick" class="ui primary button middle" > Se loguer </button>
     </div></div>
   </div>
+
 </div>
 
 
 <div class="ui active inverted dimmer" v-if="loader" ><div class="ui text loader"></div></div>
 
+
 </div>
+
+
 </template>
 
 <script>
 import lodashStartCase from 'lodash/startCase';
 import { mapGetters, mapMutations } from 'vuex';
+
 export default {
 
     data() {

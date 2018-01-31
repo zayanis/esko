@@ -1,8 +1,12 @@
 <template>
 <div>
-	<p><h1>text</h1></p>
 	<div class="ui top attached tabular menu">
-	  <div class="item"></div>
+	  <div class="item">
+			<h2 class="ui blue header"> 
+				<i class="search  icon"></i>
+				<div class="content"> Rechercher et ajouter des annonces</div>
+			</h2>
+		</div>
 	</div>
 
 	<div class="ui secondary  menu" >
@@ -78,7 +82,7 @@
 	</modal>
   
 	  
-	<modal name="ajout" :width="800"  :height="300"  :scrollable="true" :draggable = "true">
+	<modal name="ajout" :width="500"  :height="400"  :scrollable="true" :draggable = "true">
 		<app-ajout-demande></app-ajout-demande>
     </modal>
 	

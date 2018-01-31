@@ -5,8 +5,8 @@
 	<div class="ui top attached tabular menu">
 	  <div class="item">
 			<h2 class="ui blue header"> 
-				<i class="add user icon"></i>
-				<div class="content">Parrainer vos proches</div>
+				<i class="plug icon"></i>
+				<div class="content">contact</div>
 			</h2>
 		</div>
 	</div>
