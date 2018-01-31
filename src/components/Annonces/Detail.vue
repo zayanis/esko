@@ -1,6 +1,6 @@
 <template >
 
-	<div class="ui middle aligned center aligned grid">
+		<div class="ui middle aligned center aligned grid internally celled">
 	
 				<div class="column">
 					<div class="ui center aligned page grid">
@@ -17,7 +17,7 @@
 											<div class="field">
 										<label for="adresse">Montant à donner en {{selectedDemande.FROM}}:</label>
 										<div class="ui icon input">
-											<input type="text"   name="montant_2" id="montant_2"  v-bind:value=this.montant_envoye disabled /> <i class="location line chart  icon"></i>
+											<input type="text"   name="montant_2" id="montant_2"  v-bind:value=this.montant_envoye disabled /> <i class="location line eur  icon"></i>
 
 										</div>
 									</div>

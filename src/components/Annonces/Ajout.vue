@@ -1,14 +1,14 @@
             <template>
 
-  <div class="ui two column centered grid">
+  <div class="ui middle center internally celled grid">
 
-			    <div class="column"></div>
-				<div class="column"></div>
-				<div class="column"></div>
-				
+			 <div class="row">
+			 
+			  <div class="therteen wide   column">
 					     <form class="ui form" >
 						 
-						    <div class="two fields">
+						<div class="nine wide field">
+						
 								 	  <div class="field">
 									<semantic-ui-dropdown
 														:selection="true"
@@ -18,9 +18,10 @@
 														v-model="demandeFrom"
 									></semantic-ui-dropdown>
 								</div>
-
+							</div>
+							<div class="nine wide field">
 								  <div class="field">
-															<semantic-ui-dropdown
+									<semantic-ui-dropdown
 											:selection="true"
 											:fluid="true"
 											text="Vers"
@@ -28,52 +29,60 @@
 											v-model="demandeDest"
 									></semantic-ui-dropdown>
 								  </div>
-							</div>
+					
+						 	</div>
 						 
-						 
-						 
-		
-					<div class="inline fields">
-								<div class="eight wide field">
-									<label>Montant demand&eacute; en {{devise}} </label>
-									  <input type="number" min="0" step="100" placeholder="Montant" v-model="montant">
-								</div>
+					
+								<div class="inline fields">
 								<div class="three wide field">
-								<label>Taux </label>
-								  <input type="number" step="0.01" placeholder="Taux"  v-model="taux">
+									<label>Montant demand&eacute; en {{devise}} </label>
+									  </div>
+									<div class="six wide field">
+									  <input type="number" min="0" step="100" placeholder="Montant" v-model="montant">
+									  </div>
 								</div>
-								<div class="five wide field">
-								  <input type="number" placeholder="Montant" v-model="montant_from" disabled>
-								  <label>{{devise_from}}</label>
+								
+							
+							
+								<div class="inline fields">
+								<div class="three wide field">
+									<label>Taux </label>
+										  </div>
+									<div class="six wide field">
+									  <input type="number" step="0.01" placeholder="Taux"  v-model="taux">
+									  </div>
 								</div>
-						</div>
-						
-
-						<div class="inline fields">
-								<div class="eight wide field">
-									<label>Date </label>
-									  <input type="date" placeholder="Date" v-model="date">
+								
+									<div class="inline fields">
+										<div class="three wide field">
+											<label>Montant &agrave; envoyer </label>
+										</div>
+										<div class="six wide field">
+											 <input type="number" placeholder="Montant" v-model="montant_from" disabled>
+									  </div>
 								</div>
-						</div>
-			
+								
+								
+		
 					  <div class="field">
 						  <div>
 							<button v-on:click="ajouterDemande();" class="ui primary button">Ajouter</button>
 							</div>  
 						</div>
 						
-						
+					
 						
 				</form>
 
-
+	</div>
+	</div>
 	</div>			
 
 </template>
 <script>
 import { mapGetters, mapMutations } from 'vuex';
 import { Dropdown } from 'semantic-ui-vue2';
-
+import moment from 'moment';
 
 export default {
 components: {
@@ -105,6 +114,7 @@ data() {
 	mounted() {
 
 			this.$store.dispatch('requestPays');
+			
 	
     },
 	
@@ -129,12 +139,14 @@ data() {
 						else if( this.taux == null || this.taux == "" ){
 							this.error="Champs taux manquant";
 						}
-						else if( this.date == null || this.date == "" ){
+						
+						/** else if( this.date == null || this.date == "" ){
 							this.error="Champs date manquant";
-						}
+						} **/
 						else{
 						this.error="";
 	
+			//this.date = moment();
 		
 			 this.$http.post('rest/demandes',   {
 									FROM: this.demandeFrom,
@@ -142,7 +154,7 @@ data() {
 									DEVISE: this.devise,
 									MONTANT: this.montant,
 									TAUX: this.taux,
-									DATE: this.date,
+									DATE: moment(),
 									ACTIVE: true,
 									user: this.inscrit[0]._id
 			 
