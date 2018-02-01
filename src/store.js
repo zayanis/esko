@@ -1,12 +1,14 @@
 import find from 'lodash/find';
 import findIndex from 'lodash/findIndex';
+import lodash from 'lodash';
 import moment from 'moment';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VueSession from 'vue-session';
 import VModal from 'vue-js-modal';
 import VeeValidate  from 'vee-validate';
-
+import Paginate from 'vuejs-paginate'
+Vue.use(Paginate);
 Vue.use(VModal);
 Vue.use(VueSession);
 Vue.use(Vuex);
@@ -119,7 +121,8 @@ const mutations = {
         state.countUsers = countUsers;
     },
 	setAllDemandes(state, demandes) {
-        state.demandes = demandes;
+	 
+        state.demandes = lodash.orderBy(demandes, 'ID_DEMANDE');
     },
 	setDevise(state, devise) {
         state.devise = devise;
