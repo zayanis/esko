@@ -15,21 +15,21 @@
 <br></br><br></br><br></br>
 			
 					<div class="ui three top attached steps">
-						  <a  v-on:click="aller_step1();" class="step" v-bind:class="{ completed  : step1 }">
+						  <a  v-on:click="aller_step1();" class="step" v-bind:class="{ active  : step1 }">
 							<i class="search icon"></i>
 							<div class="content">
 							  <div class="title">Demander</div>
 							  <div class="description"></div>
 							</div>
 						  </a>
-						  <a  v-on:click="aller_step2();" class="step" v-bind:class="{ completed : step2 }">
+						  <a  v-on:click="aller_step2();" class="step" v-bind:class="{ active : step2 }">
 							<i class="address card icon"></i>
 							<div class="content">
 							  <div class="title">Contacter</div>
 							  <div class="description"></div>
 							</div>
 						  </a>
-						  <a  v-on:click="aller_step3();" class="step" v-bind:class="{ completed : step3 }">
+						  <a  v-on:click="aller_step3();" class="step" v-bind:class="{ active : step3 }">
 							<i class="handshake icon"></i>
 							<div class="content">
 							  <div class="title">Arrangement</div>
@@ -39,7 +39,7 @@
 						</div>
 						
 						<div v-if="step1" class="ui attached segment">
-						  <p>STEP 1</p>
+						  <p>Vous pouvez dans <a href="/#/annonces">annaonces</a></p>
 						</div>
 							<div v-if="step2" class="ui attached segment">
 						  <p>STEP 2</p>

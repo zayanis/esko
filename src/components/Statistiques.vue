@@ -24,7 +24,7 @@
 	  
 		<tbody>
 	  
-		   <tr v-if="demandes.length > 0" v-for="demande in demandes">
+		   <tr v-if="demandes_pagine.length > 0" v-for="demande in demandes_pagine">
 						   
 							<td>{{ demande.FROM }}</td>
 							<td>{{ demande.DEST }}</td>
@@ -45,6 +45,24 @@
 		</tfoot>
 	</table>
 	
+	 <center>
+	 
+	<div v-if="demandes_pagine.length > 0">
+	 <paginate
+			:page-count="nb_page"
+			  :container-class="'ui pagination menu'"
+			  :prev-text="'<'"
+			  :next-text="'>'"
+			  :prev-class ="'item'"
+			  :next-class ="'item'"
+			  :active-class ="'active item'"
+			  :page-class = "'item'"
+			  :click-handler="clickCallback"
+			  ref="paginate" >
+	  </paginate>
+		</div>
+  </center>
+  
 
 		<modal name="detail_stat" height="auto" :scrollable="true"  :draggable = "true">
 		<app-detail-demande :selectedDemande="this.selectedDemande"></app-detail-demande>
@@ -63,17 +81,22 @@
 import { mapGetters } from 'vuex';
 import Detail from './Statistique/Detail_stat.vue';
 import moment from 'moment';
+import lodash from 'lodash';
+import Paginate from 'vuejs-paginate'
 
 export default {
 components: {
-		   'app-detail-demande': Detail 
+		   'app-detail-demande': Detail,
+			'paginate' : Paginate		   
 		   
     },
   data() {
         return {
 
 			loader: false,
-			
+			page : 5 ,
+			nb_page: 0,
+			demandes_pagine: [],
 			selectedDemande: null
             
         }
@@ -85,6 +108,24 @@ components: {
     },
     methods: {
 	
+	clickCallback: function(pageNum) {
+			
+			this.loader = true;	
+			var j= (pageNum )* this.page ;
+			var k = ( pageNum -1 ) * this.page ;
+			var i=0;
+			var h=0;
+			this.demandes_pagine= [];
+				for (i = k; i <  j ; i++) {
+							if(i< this.demandes.length){
+							this.demandes_pagine[h] =  this.demandes[i];
+							h++;
+							}
+							
+			}
+			this.loader = false;	
+			},	
+			
 	onDetailDemande(demande) {
 		this.selectedDemande= demande;
 		  this.$modal.show('detail_stat');
@@ -124,7 +165,23 @@ components: {
     },
 	watch: {
 	demandes (demandes){
-	this.loader= false;
+			 this.nb_page = this.demandes.length / this.page;
+	
+		
+		 var j=0;
+		 var i=0;
+	
+			if( this.demandes.length > this.page){
+			j= this.page;
+			}
+		else{
+				j=this.demandes.length;
+			}
+		 
+		for (i = 0; i <  j; i++) {
+						this.demandes_pagine[i] =  this.demandes[i];
+								this.loader= false;
+	}
 	}
 	},
 	

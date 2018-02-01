@@ -4,7 +4,7 @@
 	  <div class="item">
 			<h2 class="ui blue header"> 
 				<i class="search  icon"></i>
-				<div class="content"> Rechercher et ajouter des annonces</div>
+				<div class="content"> Rechercher Annonces</div>
 			</h2>
 		</div>
 	</div>
@@ -53,7 +53,7 @@
 	  </thead>
 	  
 		<tbody>
-		   <tr v-if="demandes.length > 0" v-for="demande in demandes">
+		   <tr v-if="demandes_pagine.length > 0" v-for="demande in demandes_pagine">
 						   
 							<td>{{ demande.FROM }}</td>
 							<td>{{ demande.DEST }}</td>
@@ -68,10 +68,28 @@
 				<th></th>
 				<th></th>
 				<th></th>
+				
 			</tr>
 		</tfoot>
 	</table>
-
+ 
+ <center>
+	<div v-if="demandes_pagine.length > 0">
+	 <paginate
+			:page-count="nb_page"
+			  :container-class="'ui pagination menu'"
+			  :prev-text="'<'"
+			  :next-text="'>'"
+			  :prev-class ="'item'"
+			  :next-class ="'item'"
+			  :active-class ="'active item'"
+			  :page-class = "'item'"
+			  :click-handler="clickCallback"
+			  ref="paginate" >
+	  </paginate>
+		</div>
+  </center>
+  <br></br><br></br>
   
 	<div class="ui right floated ">
 		<button v-on:click="afficherAjoutDemande();" class="ui right primary button">Ajouter une demande</button>
@@ -97,6 +115,9 @@
 import { mapGetters, mapMutations } from 'vuex';
 import { Dropdown } from 'semantic-ui-vue2';
 import moment from 'moment';
+import lodash from 'lodash';
+import Paginate from 'vuejs-paginate'
+
 
 import Detail from './Annonces/Detail.vue';
 import Ajout from './Annonces/Ajout.vue';
@@ -104,16 +125,19 @@ export default {
 components: {
         'semantic-ui-dropdown': Dropdown,
 		   'app-detail-inscrit': Detail, 
-		   'app-ajout-demande': Ajout
+		   'app-ajout-demande': Ajout,
+		   'paginate' : Paginate
     },
 data() {
         return {
-
+			page : 5 ,
 			paysfrom :'',
 			paysdest :'',
 			loader: false,
             selectedDemande: null,
-			demandes: []
+			demandes: [],
+			nb_page: 0,
+			demandes_pagine: []
         }
     },
     computed: {
@@ -123,7 +147,13 @@ data() {
         })
     },
 	mounted() {
+		this.loader = true;
 			this.$store.dispatch('requestPays');
+			var request = '{"ACTIVE":true}';
+			this.$http.get('rest/demandes?max=5',    {params:  {'q':`${request}`}})
+			.then(response => {
+					this.demandes =lodash.orderBy( response.body, 'ID_DEMANDE');
+				});
 	
     },
 	 created() {
@@ -131,20 +161,39 @@ data() {
       if( this.inscrit == null || this.inscrit == "" ){
 	  var username= localStorage.getItem('authToken');
 	  var request = '{"mail":"' +username +'"}';
-	  			this.$store.dispatch('requestInscrit',request);
+	  this.$store.dispatch('requestInscrit',request);
 		
 	  }
     },
-    methods: {			
+    methods: {		
+			clickCallback: function(pageNum) {
+		
+		
+			this.loader = true;	
+			var j= (pageNum )* this.page ;
+			var k = ( pageNum -1 ) * this.page ;
+			var i=0;
+			var h=0;
+			this.demandes_pagine= [];
+				for (i = k; i <  j ; i++) {
+							if(i< this.demandes.length){
+							this.demandes_pagine[h] =  this.demandes[i];
+							h++;
+							}
+							
+			}
+			this.loader = false;	
+			},	
         rechercher() {
 	
 			this.loader = true;
+			 this.$refs.paginate.selected=0;
 			if(this.paysfrom &&  this.paysdest ){
-	
+			this.demandes_pagine= [];
 			var request = '{"FROM":"' +this.paysfrom+ '", "DEST": "' + this.paysdest +'", "ACTIVE":true}';
 			this.$http.get('rest/demandes',    {params:  {'q':`${request}`}})
 			.then(response => {
-					this.demandes = response.body;
+					this.demandes =lodash.orderBy( response.body, 'ID_DEMANDE');
 				});
 
 			}
@@ -170,14 +219,36 @@ data() {
 		
     },
 	watch: {
+	
+	 	
+		
         paysfrom(pays) {
 		 this.paysfrom=pays;
         },
 		 paysdest(pays) {
 			this.paysdest=pays;
         },
+		
 		 demandes(demandes) {
+ 
 		 this.demandes= demandes;
+		 this.nb_page = this.demandes.length / this.page;
+	
+		
+		 var j=0;
+		 var i=0;
+	
+			if( this.demandes.length > this.page){
+			j= this.page;
+			}
+		else{
+				j=this.demandes.length;
+			}
+		 
+		for (i = 0; i <  j; i++) {
+						this.demandes_pagine[i] =  this.demandes[i];
+		}
+		
 		 this.loader = false;
         }
 		
