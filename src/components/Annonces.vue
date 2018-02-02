@@ -4,7 +4,7 @@
 	  <div class="item">
 			<h2 class="ui blue header"> 
 				<i class="search  icon"></i>
-				<div class="content"> Rechercher Annonces</div>
+				<div class="content">Les Annonces</div>
 			</h2>
 		</div>
 	</div>
@@ -92,7 +92,7 @@
   <br></br><br></br>
   
 	<div class="ui right floated ">
-		<button v-on:click="afficherAjoutDemande();" class="ui right primary button">Ajouter une demande</button>
+		<button v-on:click="afficherAjoutDemande();" class="ui right primary button">D&eacute;poser une annonce</button>
 	</div>
 
 	<modal name="detail" :width="800"  :height="500"  :draggable = "true">
@@ -137,6 +137,7 @@ data() {
             selectedDemande: null,
 			demandes: [],
 			nb_page: 0,
+			recherche: false,
 			demandes_pagine: []
         }
     },
@@ -147,28 +148,31 @@ data() {
         })
     },
 	mounted() {
-		this.loader = true;
+		
 			this.$store.dispatch('requestPays');
 			var request = '{"ACTIVE":true}';
 			this.$http.get('rest/demandes?max=5',    {params:  {'q':`${request}`}})
 			.then(response => {
 					this.demandes =lodash.orderBy( response.body, 'ID_DEMANDE');
 				});
+
 	
     },
 	 created() {
-	
+
+	this.loader = true;	
       if( this.inscrit == null || this.inscrit == "" ){
 	  var username= localStorage.getItem('authToken');
 	  var request = '{"mail":"' +username +'"}';
 	  this.$store.dispatch('requestInscrit',request);
-		
+	
 	  }
     },
     methods: {		
-			clickCallback: function(pageNum) {
-		
-		
+	
+	
+			clickCallback(pageNum) {
+
 			this.loader = true;	
 			var j= (pageNum )* this.page ;
 			var k = ( pageNum -1 ) * this.page ;
@@ -182,12 +186,15 @@ data() {
 							}
 							
 			}
-			this.loader = false;	
+			
 			},	
         rechercher() {
-	
+			//this.demandes = null;
+			this.recherche = true;
 			this.loader = true;
-			 this.$refs.paginate.selected=0;
+			if(this.nb_page > 0){
+						 this.$refs.paginate.selected=0;
+			 }
 			if(this.paysfrom &&  this.paysdest ){
 			this.demandes_pagine= [];
 			var request = '{"FROM":"' +this.paysfrom+ '", "DEST": "' + this.paysdest +'", "ACTIVE":true}';
@@ -195,10 +202,8 @@ data() {
 			.then(response => {
 					this.demandes =lodash.orderBy( response.body, 'ID_DEMANDE');
 				});
-
 			}
-			
-				
+			this.recherche = false;	
         }, 
 		onDetailUser(demande) {
 			    this.$modal.show('detail');
@@ -220,8 +225,13 @@ data() {
     },
 	watch: {
 	
-	 	
-		
+	recherche(recherche){
+	
+	if(! this.recherche){
+		this.loader = false;	
+	}
+	
+	},
         paysfrom(pays) {
 		 this.paysfrom=pays;
         },
@@ -248,8 +258,8 @@ data() {
 		for (i = 0; i <  j; i++) {
 						this.demandes_pagine[i] =  this.demandes[i];
 		}
+		this.loader = false;	
 		
-		 this.loader = false;
         }
 		
     },

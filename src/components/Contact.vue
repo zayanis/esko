@@ -28,11 +28,17 @@
                         <div class="field">
                             <label for="mail">E-mail:</label>
                             <div class="ui icon input">
-                                <!-- input type="email" placeholder="mail" v-model="mail" /> <i class="mail icon"></i -->
-								<input type="email" name="email" placeholder="Email" v-validate="'required|email'" v-model="mail">
+								<input type="email" name="email" placeholder="Email"v-model="mail" disabled >
                             </div>
                         </div>
-                
+						<div class="field">
+                            <label for="mail">Message:</label>
+                            <div class="ui icon input">
+                                
+					
+							  <textarea name="message" rows="10" cols="30" v-model="message"></textarea>
+                            </div>
+                        </div>
                     </div>
 					 <div class="ui negative message" v-if="error !== null"><em v-html="error"></em></div>
 					 
@@ -56,17 +62,25 @@ export default {
   
     computed: {
         ...mapGetters({
+		
         })
     },
 data() {
         return {
            mail : '',
+		   mail_support : 'zayanis@gmail.com',
+		   message : '',
 		   error : null,
-		   html : 'html',
-		   subject : 'subject',
-		   sendername : 'sendername'
+		   subject : 'Contact / Questions ',
+		     sendername : 'sendername'
+		
         }
     },
+	 created() {
+
+		  this.mail= localStorage.getItem('authToken');
+    },
+	
     methods: {
 	
         Envoyer() {
@@ -78,46 +92,36 @@ data() {
       }
 	   if (!this.errors.any()) {
 		this.error = null;
-		var isExist = 100;
 		
-		 var request = '{"mail":"' + this.mail +'"}';
-		
-		this.$http.get('rest/inscrits',   {params:  {'q':`${request}` , 'h':'{"$aggregate":["COUNT:"]}'}})
-		.then(response => {
 
-          isExist = response.body["COUNT "];	
-		  
-		  		if(isExist < 1 ){
-			
-						if( this.mail == null || this.mail == "" ){
+          
+						if( this.message == null || this.message == "" ){
+						this.error = "Message vide.";
 						}
 						else
 							{
+							var html = "Message de : " +this.mail + "<br>" + this.message;
 							this.$http.post('mail',   {
-												to: this.mail,
+												to: this.mail_support,
 												subject: this.subject,
-												html: this.html,
+												html: html,
 												sendername: this.sendername
 						 
 						 })
 						 .then(response => {
-							this.error = "Mail envoy&eacute;";	 
-							this.mail = null;
+							this.error = "Message envoy&eacute;";	 
+							this.message = null;
 						});
 						}
-					}
 				
-					else{
-					this.error = "Mail existe dans notre base";
-					}
 	
-        });
+        }
 		
 		
 
 	}
 		  
 	}
-    }
+
 }
 </script>

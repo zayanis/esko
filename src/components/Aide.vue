@@ -14,7 +14,7 @@
 
 <br></br><br></br><br></br>
 			
-					<div class="ui three top attached steps">
+					<div class="ui three top attached mini  steps">
 						  <a  v-on:click="aller_step1();" class="step" v-bind:class="{ active  : step1 }">
 							<i class="search icon"></i>
 							<div class="content">
@@ -39,13 +39,16 @@
 						</div>
 						
 						<div v-if="step1" class="ui attached segment">
-						  <p>Vous pouvez dans <a href="/#/annonces">annaonces</a></p>
+						  <p>
+							Aller dans le menu <a href="/#/annonces">annonces</a>.<br></br>
+							Vous pouvez consulter, rechercher ou d&eacute;poser une annonce.
+						  </p>
 						</div>
 							<div v-if="step2" class="ui attached segment">
-						  <p>STEP 2</p>
+						  <p>Dans le d&eacute;tail de l'annonce, vous pouvez obtenir les coordonn&eacute;es de l'utilisateur.<br></br>Vous pouvez d&eacute;sormais le contacter par mail ou par t&eacute;l&eacute;phone.</p>
 						</div>
 							<div v-if="step3" class="ui attached segment">
-						  <p>STEP 3</p>
+						  <p>Il vous reste que se mettre d'accord sur les modalit&eacute;s de transfert (lieu, taux, date...)</p>
 						</div>
 
 </div>
