@@ -11,7 +11,7 @@ Vue.http.headers.common['x-apikey'] = '5a50e16e7679b5244b6632d4';
 Vue.http.interceptors.push(function (request, next) {
     const authToken = localStorage.getItem('authToken');
     if (authToken !== null) {
-        request.headers.set('Authorization', 'Bearer ' + authToken);
+
 		 request.headers.set('x-apikey', '5a50e16e7679b5244b6632d4');
     }
     next(response => {
