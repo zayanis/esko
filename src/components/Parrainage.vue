@@ -64,7 +64,8 @@ data() {
 		   error : null,
 		   html : 'html',
 		   subject : 'subject',
-		   sendername : 'sendername'
+		   sendername : 'sendername',
+		   password : ''
         }
     },
     methods: {
@@ -79,6 +80,7 @@ data() {
 	   if (!this.errors.any()) {
 		this.error = null;
 		var isExist = 100;
+		var user_id='';
 		
 		 var request = '{"mail":"' + this.mail +'"}';
 		
@@ -93,7 +95,16 @@ data() {
 						}
 						else
 							{
-							this.$http.post('mail',   {
+							
+							
+								this.$http.post('rest/inscrits',   {
+												mail: this.mail						 
+						 })
+						 .then(response => {
+							user_id = response.body._id;
+							
+							this.html=user_id;
+								this.$http.post('mail',   {
 												to: this.mail,
 												subject: this.subject,
 												html: this.html,
@@ -104,6 +115,11 @@ data() {
 							this.error = "Mail envoy&eacute;";	 
 							this.mail = null;
 						});
+							
+						});
+						
+							
+						
 						}
 					}
 				
@@ -117,6 +133,14 @@ data() {
 
 	}
 		  
+	},
+	generate (){
+      let CharacterSet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      this.password = '';
+	  for(let i=0; i < 8; i++) {
+        this.password += CharacterSet.charAt(Math.floor(Math.random() * CharacterSet.length));
+      }
+	  
 	}
     }
 }

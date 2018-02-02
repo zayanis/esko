@@ -4,10 +4,12 @@
 
 	<div class="ui top attached tabular menu">
 	  <div class="item">
+	  <center>
 			<h2 class="ui blue header"> 
 				<i class="plug icon"></i>
-				<div class="content">contact</div>
+				<div class="content">INSCRIPTION</div>
 			</h2>
+			</center>
 		</div>
 	</div>
 
@@ -76,10 +78,7 @@ data() {
 		
         }
     },
-	 created() {
-
-		  this.mail= localStorage.getItem('authToken');
-    },
+	 
 	
     methods: {
 	
@@ -113,7 +112,22 @@ data() {
 
 	}
 		  
-	}
+	},
+	created() {
+	 		//?inscription=ok&user=_id
+		 var request = '{"mail":"' + this.mail +'"}';
+			var user_id = this.$route.query.user;
+			
+		this.$http.put('rest/inscrit/'+user_id,   {
+									ACTIVE: false
+			 
+			 })
+			 .then(response => {
+			 
+			console.log('true');
+            });
+
+    }
 
 }
 </script>
