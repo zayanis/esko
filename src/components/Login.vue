@@ -8,14 +8,19 @@
 
 <div class="ui two column centered grid">
   <div class="column">   <div class="ui segment">
-      text1
+     		<h2 class="ui blue header"> 
+				<div class="content">ESKO</div>
+			</h2>
     </div>
 	</div>
 	
 	
   <div class="four column centered row">
     <div class="column">   <div class="ui segment">
-     text3
+	<h3 class="ui blue header"> 
+				<div class="content">Passez des annonces gratuites et sans commission.</div>
+			</h3>
+  
 	 
     </div></div>
     <div class="column">   <div class="ui segment">
