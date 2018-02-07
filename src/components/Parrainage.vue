@@ -44,6 +44,8 @@
         </div>
     </div>
 </div>
+		<div class="ui active inverted dimmer" v-if="loader" ><div class="ui text loader"></div></div>
+		
 </div>
 </template>
 
@@ -59,6 +61,7 @@ export default {
     },
 data() {
         return {
+			loader: false,
            mail : '',
 		   error : null,
 		   html : 'html',
@@ -78,6 +81,7 @@ data() {
 			this.error = "Mail vide ou incorrecte.";
       }
 	   if (!this.errors.any()) {
+	   this.loader= true;
 		this.error = null;
 		var isExist = 100;
 		var user_id='';
@@ -130,7 +134,7 @@ data() {
         });
 		
 		
-
+	this.loader= false;
 	}
 		  
 	},
