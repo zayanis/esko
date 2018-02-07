@@ -28,7 +28,6 @@
                         <div class="field">
                             <label for="mail">E-mail:</label>
                             <div class="ui icon input">
-                                <!-- input type="email" placeholder="mail" v-model="mail" /> <i class="mail icon"></i -->
 								<input type="email" name="email" placeholder="Email" v-validate="'required|email'" v-model="mail">
                             </div>
                         </div>
@@ -63,8 +62,9 @@ data() {
            mail : '',
 		   error : null,
 		   html : 'html',
-		   subject : 'subject',
-		   sendername : 'sendername',
+		   subject : 'Parrainage esko (site d\'annonces)',
+		   sendername : 'esko',
+		   url : 'https://sad-jackson-f62e92.netlify.com/',
 		   password : ''
         }
     },
@@ -102,8 +102,8 @@ data() {
 						 })
 						 .then(response => {
 							user_id = response.body._id;
-							
-							this.html=user_id;
+							var lien = this.url+"#/annonces?inscription=&mail="+this.mail+"&id="+user_id;
+							this.html="Un(e) ami(e) vous recommande notre site. Nous sommes un site de d&eacute;p&ocirc;t d\n'annonce pour &eacute;change de devise entre particulier. Pour finaliser votre inscription, veuillez cliquer sur le lien ci dessous:<br>"+lien;
 								this.$http.post('mail',   {
 												to: this.mail,
 												subject: this.subject,
@@ -134,14 +134,7 @@ data() {
 	}
 		  
 	},
-	generate (){
-      let CharacterSet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      this.password = '';
-	  for(let i=0; i < 8; i++) {
-        this.password += CharacterSet.charAt(Math.floor(Math.random() * CharacterSet.length));
-      }
-	  
-	}
+
     }
 }
 </script>

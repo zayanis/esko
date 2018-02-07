@@ -16,7 +16,6 @@
 
 <br></br><br></br><br></br>
 
-
 <div class="ui middle aligned center aligned grid">
 
     <div class="column">
@@ -33,12 +32,17 @@
 								<input type="email" name="email" placeholder="Email"v-model="mail" disabled >
                             </div>
                         </div>
-						<div class="field">
-                            <label for="mail">Message:</label>
+						    <div class="field">
+                            <label for="mail">T&eacute;l&eacute;phone:</label>
                             <div class="ui icon input">
-                                
-					
-							  <textarea name="message" rows="10" cols="30" v-model="message"></textarea>
+								<input type="text" name="tel" v-validate="'required|numeric'"  v-model="tel">
+                            </div>
+                        </div>
+						
+						<div class="field">
+                            <label for="mail">Adresse</label>
+                            <div class="ui icon input">
+									<input type="text" name="adresse"  v-validate="'required'"  v-model="adresse">
                             </div>
                         </div>
                     </div>
@@ -63,6 +67,8 @@ import { mapGetters } from 'vuex';
 export default {
   
     computed: {
+
+			
         ...mapGetters({
 		
         })
@@ -70,11 +76,13 @@ export default {
 data() {
         return {
            mail : '',
-		   mail_support : 'zayanis@gmail.com',
-		   message : '',
+		   tel : '',
+		   user_id: '',
+		   adresse : '',
 		   error : null,
-		   subject : 'Contact / Questions ',
-		     sendername : 'sendername'
+		   subject : 'Inscription esko (site d\'annonces)',
+		   password : '',
+		   sendername : 'esko'
 		
         }
     },
@@ -83,49 +91,72 @@ data() {
     methods: {
 	
         Envoyer() {
-		
-
-
+		this.$validator.validateAll();
+      
+      if (this.errors.any()) {
+			this.error = "Champs vide ou incorrecte.";
+      }
+	   if (!this.errors.any()) {
 		this.error = null;
-		
+		var passResponse='';
 
-          
-						if( this.message == null || this.message == "" ){
-						this.error = "Message vide.";
-						}
-						else
-							{
-							var html = "Message de : " +this.mail + "<br>" + this.message;
+				this.$http.get('rest/inscrits/'+this.user_id).then(response => {
+						passResponse = response.body.password;;
+			   });
+		
+			if( passResponse == null || passResponse == "" ){
+			
+				this.generate();
+				this.$http.put('rest/inscrits/'+this.user_id,   {
+									mail : this.mail,
+									telephone: this.tel,
+									adresse: this.adresse,
+									password: this.password
+									
+									
+			 
+			 })
+			 .then(response => {
+			 //on envoi un mail avec le mot de passe.
+			 
+			 var html = "Votre inscription est valid&eacute;e.<br>Voici les informations pour se connecter:<br>mail: "+ this.mail+"<br>"+"mot de passe: "+this.password;
+			 
 							this.$http.post('mail',   {
-												to: this.mail_support,
+												to: this.mail,
 												subject: this.subject,
 												html: html,
 												sendername: this.sendername
 						 
 						 })
 						 .then(response => {
-							this.error = "Message envoy&eacute;";	 
-							this.message = null;
+							this.error = "Inscription valid&eacute;e";	
+							  this.$router.push('/')
 						});
-						}
+			 		 
+            });
+		}
 		
-
+		else{
+			this.error = "Vous avez d&eacute;j&agrave; un compte";	
+		}
 	}
+	},
+	generate (){
+      let CharacterSet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      this.password = '';
+	  for(let i=0; i < 8; i++) {
+        this.password += CharacterSet.charAt(Math.floor(Math.random() * CharacterSet.length));
+      }
+	  
+	}
+	
 		  
 	},
-	created() {
-	 		//?inscription=ok&user=_id
-		 var request = '{"mail":"' + this.mail +'"}';
-			var user_id = this.$route.query.user;
-			
-		this.$http.put('rest/inscrit/'+user_id,   {
-									ACTIVE: false
-			 
-			 })
-			 .then(response => {
-			 
-			console.log('true');
-            });
+	mounted() {
+
+		 //var request = '{"mail":"' + this.mail +'"}';
+			this.user_id = this.$route.query.id;
+			this.mail= this.$route.query.mail;
 
     }
 

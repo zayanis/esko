@@ -72,7 +72,7 @@ data() {
 		   message : '',
 		   error : null,
 		   subject : 'Contact / Questions ',
-		     sendername : 'sendername'
+		     sendername : 'esko'
 		
         }
     },

@@ -258,10 +258,10 @@ data() {
 		for (i = 0; i <  j; i++) {
 						this.demandes_pagine[i] =  this.demandes[i];
 		}
-		this.loader = false;	
-		
+	
+			this.loader = false;
         }
-		
+			
     },
 	
 	filters: {
