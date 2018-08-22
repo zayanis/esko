@@ -14,21 +14,27 @@
 	 <table class="ui blue table sortable">
 	  <thead>
 		<tr>
-			<th>De</th>
-			<th>Vers</th>
-			<th>Date</th>
-			<th>Consulter</th>
-			<th>Supprimer</th>
+			<th>Categories</th>
+			<th>Taches</th>
+			<th>Commentaires</th>
+			<th>Status</th>
+			<th>Date de MAJ</th>
+			<th>A1</th>
+			<th>A2</th>
+			
 		</tr>
 	  </thead>
 	  
 		<tbody>
 	  
-		   <tr v-if="demandes_pagine.length > 0" v-for="demande in demandes_pagine">
+		   <tr  v-bind:class="note.statutclass" v-if="notes_pagine.length > 0" v-for="note in notes_pagine">
 						   
-							<td>{{ demande.FROM }}</td>
-							<td>{{ demande.DEST }}</td>
-							<td>{{ demande.DATE | formatDate }} </td>
+							<!-- td  v-bind:rowspan="note.tachenb">{{ note.categorie}}</td -->
+							<td>{{ note.categorie}}</td>
+							<td contenteditable>{{ note.tache }}</td>
+							<td contenteditable>{{ note.commentaire }}</td>
+							<td >{{ note.statut }}</td>
+							<td>{{ note.date | formatDate }} </td>
 							<td class="selectable"><a href="#/statistiques" @click="onDetailDemande(demande)"><i class="unhide icon"></i></a></td>
 							<td class="selectable"><a href="#/statistiques" @click="supprimer(demande)"><i class="remove icon"></i></a></td>
 							
@@ -41,13 +47,15 @@
 				<th></th>
 				<th></th>
 				<th></th>
+				<th></th>
+				<th></th>
 			</tr>
 		</tfoot>
 	</table>
 	
 	 <center>
 	 
-	<div v-if="demandes_pagine.length > 0">
+	<div v-if="notes_pagine.length > 1">
 	 <paginate
 			:page-count="nb_page"
 			  :container-class="'ui pagination menu'"
@@ -96,8 +104,43 @@ components: {
 			loader: false,
 			page : 5 ,
 			nb_page: 0,
-			demandes_pagine: [1000],
-			selectedDemande: null
+		notes_pagine: 
+				[{
+					 	categorie:'categorie1',
+						tachenb:'3',
+						tache:'tache1',
+						commentaire: 'commentaire1',
+						statut:'O',
+						statutclass:'positive',
+						date:'01/01/2018',
+					},
+					{
+					 	categorie:'categorie1',
+						tachenb:'3',
+						tache:'tache1',
+						commentaire: 'commentaire2',
+						statut:'C',
+						date:'01/02/2018',
+					},
+					{
+					 	categorie:'categorie1',
+						tachenb:'3',
+						tache:'tache2',
+						commentaire: 'commentaire1',
+						statut:'O',
+						date:'01/03/2018',
+					},
+					{
+					 	categorie:'categorie2',
+						tachenb:'1',
+						tache:'tache1',
+						commentaire: 'commentaire1',
+						statut:'O',
+						date:'01/04/2018',
+					}],
+  
+			selectedDemande: null,
+			
             
         }
     },
