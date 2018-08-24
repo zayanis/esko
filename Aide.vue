@@ -1,14 +1,15 @@
 <template>
     <div>
+	    <!-- div v-for="data in rowData">{{data}}</div -->
         <button @click="getSelectedRows()">Get Selected Rows</button>
-        <ag-grid-vue style="width: 1000px; height: 1000px;"
-                     class="ag-theme-balham"
+        <ag-grid-vue 
+					class="ag-theme-balham"
+                     gridAutoHeight=true
                      :columnDefs="columnDefs"
                      :rowData="rowData"
                      :enableSorting="true"
                      :enableFilter="true"
                      rowSelection="multiple"
-						
                      :gridReady="onGridReady">
         </ag-grid-vue>
     </div>
@@ -16,13 +17,13 @@
 
 <script>
     import {AgGridVue} from "ag-grid-vue";
-
+	import json from 'C:/Users/x107979/Desktop/test.json';
     export default {
         name: 'App',
         data() {
             return {
                 columnDefs: null,
-                rowData: null,
+                rowData: json,
                 gridApi: null,
                 columnApi: null,
                 autoGroupColumnDef: null
@@ -39,29 +40,46 @@
             getSelectedRows() {
                 const selectedNodes = this.gridApi.getSelectedNodes();
                 const selectedData = selectedNodes.map(node => node.data);
-                const selectedDataStringPresentation = selectedData.map(node => node.make + ' ' + node.model).join(', ');
+                const selectedDataStringPresentation = selectedData.map(node => node.tache + ' ' + node.statut).join(', ');
                 alert(`Selected nodes: ${selectedDataStringPresentation}`);
-            }
+            },
+			
+			
+			
         },
         beforeMount() {
             this.columnDefs = [
-                {headerName: 'Make', field: 'make', rowGroupIndex: 0},
-                {headerName: 'Model', field: 'model', editable: true},
-                {headerName: 'Price', field: 'price'}
+                {headerName: 'Categories', field: 'categorie', rowGroupIndex: 0},
+                {headerName: 'Taches', field: 'tache', editable: true},
+				{
+				headerName: 'Statut', 
+				field: 'statut', 
+				editable: true,
+				cellEditor : 'agSelectCellEditor',
+				cellEditorParams : {  values: ['Ouvert', 'Démarré', 'Bloqué', 'Annulé', 'Clos']},		
+				  cellStyle: function(params) {
+						if (params.value=='Clos') {
+							return {color: 'red', backgroundColor: 'green'};
+						} else {
+							return null;
+
+				}
+				}
+				},
+                {headerName: 'Commentaires', field: 'commentaire', editable: true},
+				{headerName: 'Date MAJ', field: 'date'}
+				
             ];
 
             this.autoGroupColumnDef = {
-                headerName: 'Model',
-                field: 'model',
+                headerName: 'Categories',
+                field: 'categorie',
                 cellRenderer: 'agGroupCellRenderer',
                 cellRendererParams: {
                     checkbox: true
                 }
             };
-
-            fetch('https://api.myjson.com/bins/15psn9')
-                .then(result => result.json())
-                .then(rowData => this.rowData = rowData);
+			
         }
     }
 </script>
