@@ -23,7 +23,6 @@
 <script>
     import {AgGridVue} from "ag-grid-vue";
 	import Detail from './Detail.vue';
-	import json from 'C:/Users/AZ/Desktop/test.json';
     export default {
         name: 'App',
         data() {
